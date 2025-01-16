@@ -1,4 +1,3 @@
-// SearchResults.js
 import React from 'react';
 
 const SearchResults = ({ users, onSelectUser, currentPage, totalPages, onPageChange }) => {
