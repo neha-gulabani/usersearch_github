@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react'
-import debounce from 'lodash/debounce';
+import React, { useState, useCallback, useEffect } from 'react'
+import useDebounce from '../hooks/useDebounce';
 import UserCard from './UserCard';
 import RepoList from './RepoList';
 import SearchResults from './SearchResult';
@@ -15,6 +15,8 @@ function MainPage() {
     const [mode, setMode] = useState('search');
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+
+    const debouncedRes = useDebounce(searchTerm, 500)
 
     const searchUsers = async (query, currentPage = 1) => {
         try {
@@ -89,24 +91,11 @@ function MainPage() {
     };
 
 
-    const debouncedSearch = useCallback(
-        debounce((query) => {
-            if (query.trim()) {
-                searchUsers(query);
-            } else {
-                setSearchResults([]);
-                setSelectedUser(null);
-                setReposList([]);
-            }
-        }, 500),
-        []
-    );
-
     const handleSearch = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
         setPage(1);
-        debouncedSearch(value);
+
         if (e.target.value === '') setError('')
     };
 
@@ -124,6 +113,20 @@ function MainPage() {
             searchUsers(searchTerm);
         }
     };
+
+    useEffect(() => {
+
+        if (debouncedRes) {
+            searchUsers(debouncedRes);
+        } else {
+
+            if (searchTerm === '') {
+                setSearchResults([]);
+                setSelectedUser(null);
+                setReposList([]);
+            }
+        }
+    }, [debouncedRes, searchTerm]);
 
     return (
         <>

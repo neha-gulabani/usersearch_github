@@ -18,9 +18,9 @@ const UserCard = ({ user }) => {
                 </div>
             </div>
 
-            {user.bio && (
-                <p className="text-gray-700 mt-4 mb-4">{user.bio}</p>
-            )}
+
+            <p className="text-gray-700 mt-4 mb-4">{user.bio || 'User bio not available'}</p>
+
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                 <div className="text-center p-2 bg-gray-50 rounded">
