@@ -8,19 +8,21 @@ function MainPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
-    const [repos, setRepos] = useState([]);
+    const [reposList, setReposList] = useState([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [mode, setMode] = useState('search');
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
-    const searchUsers = async (query) => {
+    const searchUsers = async (query, currentPage = 1) => {
         try {
             setLoading(true);
             setError('');
             setMode('search');
 
             const response = await fetch(
-                `https://api.github.com/search/users?q=${query}&per_page=10`
+                `https://api.github.com/search/users?q=${query}&per_page=10&page=${currentPage}`
             );
 
             if (!response.ok) {
@@ -29,11 +31,12 @@ function MainPage() {
 
             const data = await response.json();
 
-
             if (data.items.length === 0) {
                 throw new Error('User not found');
             }
 
+
+            setTotalPages(Math.ceil(data.total_count / 10));
             setSearchResults(data.items);
         } catch (err) {
             setError(err.message);
@@ -68,15 +71,20 @@ function MainPage() {
             const reposData = await reposResponse.json();
 
             setSelectedUser(userData);
-            setRepos(reposData);
+            setReposList(reposData);
             setSearchResults([]);
         } catch (err) {
             setError(err.message);
             setSelectedUser(null);
-            setRepos([]);
+            setReposList([]);
         } finally {
             setLoading(false);
         }
+    };
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+        searchUsers(searchTerm, newPage);
     };
 
 
@@ -87,7 +95,7 @@ function MainPage() {
             } else {
                 setSearchResults([]);
                 setSelectedUser(null);
-                setRepos([]);
+                setReposList([]);
             }
         }, 500),
         []
@@ -96,6 +104,7 @@ function MainPage() {
     const handleSearch = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
+        setPage(1);
         debouncedSearch(value);
         if (e.target.value === '') setError('')
     };
@@ -108,7 +117,7 @@ function MainPage() {
     const handleBackToSearch = () => {
         setMode('search');
         setSelectedUser(null);
-        setRepos([]);
+        setReposList([]);
         setError('');
         if (searchTerm) {
             searchUsers(searchTerm);
@@ -168,9 +177,17 @@ function MainPage() {
                     </div>
                 )}
 
-                {mode === 'search' && <SearchResults users={searchResults} onSelectUser={handleUserSelect} />}
+                {mode === 'search' && (
+                    <SearchResults
+                        users={searchResults}
+                        onSelectUser={handleUserSelect}
+                        currentPage={page}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                )}
                 {selectedUser && <UserCard user={selectedUser} />}
-                {repos.length > 0 && <RepoList repos={repos} />}
+                {reposList.length > 0 && <RepoList reposList={reposList} />}
             </div>
         </div>
     );

@@ -1,12 +1,12 @@
 import React from "react";
-const RepoList = ({ repos }) => {
-    if (!repos?.length) return null;
+const RepoList = ({ reposList }) => {
+    if (!reposList?.length) return null;
 
     return (
         <div className="mt-6">
             <h2 className="text-xl font-bold mb-4">Repositories</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {repos.map(repo => (
+                {reposList.map(repo => (
                     <div key={repo.id} className="bg-white rounded-lg shadow-md p-4">
                         <h3 className="font-bold text-lg">
                             <a
