@@ -122,7 +122,6 @@ function MainPage() {
 
             if (searchTerm === '') {
                 setSearchRes([]);
-                setSelectedUser(null);
                 setReposList([]);
             }
         }
