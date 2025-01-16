@@ -36,7 +36,7 @@ const UserProfile = () => {
                         alt={`${user.login}'s avatar`}
                         className="w-10 h-10 rounded-full mr-3 sm:mr-4"
                     />
-                    <div className="text-sm sm:text-base">
+                    <div className="text-sm sm:text-base text-center">
                         <h2 className="font-bold">{user.name || user.login}</h2>
                         {user.bio && <p className="text-gray-600 text-xs sm:text-sm">{user.bio}</p>}
                     </div>
@@ -96,34 +96,34 @@ const UserProfile = () => {
 
 
             {!isMobile && <div className="flex flex-wrap gap-8 mt-4 sm:mt-0 sm:flex-row sm:w-2/3 sm:text-left sm:ml-4">
-                <div className="text-center sm:text-left w-full sm:w-auto">
+                <div className="text-center sm:text-left w-full sm:w-auto text-center">
                     <p className="font-semibold">Location</p>
                     <p>{user.location || "Unknown"}</p>
                 </div>
-                <div className="text-center sm:text-left w-full sm:w-auto">
+                <div className="text-center sm:text-left w-full sm:w-auto text-center">
                     <p className="font-semibold">Public Repos</p>
                     <p>{user.public_repos}</p>
                 </div>
-                <div className="text-center sm:text-left w-full sm:w-auto">
+                <div className="text-center sm:text-left w-full sm:w-auto text-center">
                     <p className="font-semibold">Followers</p>
                     <p>{user.followers}</p>
                 </div>
-                <div className="text-center sm:text-left w-full sm:w-auto">
+                <div className="text-center sm:text-left w-full sm:w-auto text-center">
                     <p className="font-semibold">Following</p>
                     <p>{user.following}</p>
                 </div>
-                <div className="text-center sm:text-left w-full sm:w-auto">
+                <div className="text-center sm:text-left w-full sm:w-auto text-center">
                     <p className="font-semibold">Blog</p>
                     <a
                         href={user.blog}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline"
+                        className="text-blue-600 hover:underline text-center"
                     >
                         {user.blog || "N/A"}
                     </a>
                 </div>
-                <div className="text-center sm:text-left w-full sm:w-auto">
+                <div className="text-center sm:text-left w-full sm:w-auto text-center">
                     <p className="font-semibold">GitHub Profile</p>
                     <a
                         href={user.html_url}
