@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import user from "../data/data.json";
 
 const UserProfile = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [toggleOpen, setToggleOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
 
 
@@ -18,7 +18,7 @@ const UserProfile = () => {
 
 
     const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
+        setToggleOpen(!toggleOpen);
     };
     if (!user) return null;
 
@@ -47,7 +47,7 @@ const UserProfile = () => {
             </div>
 
 
-            {isMenuOpen && isMobile && (
+            {toggleOpen && isMobile && (
                 <div className="flex flex-col gap-4 sm:hidden mt-4 text-sm w-full">
                     <div className="text-center">
                         <p className="font-semibold">Location</p>

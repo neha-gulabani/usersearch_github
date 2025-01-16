@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SearchResults = ({ users, onSelectUser, currentPage, totalPages, onPageChange }) => {
+const SearchResults = ({ users, onSelection, currentPage, totalPages, onPagination }) => {
     if (!users?.length) return null;
 
     return (
@@ -10,7 +10,7 @@ const SearchResults = ({ users, onSelectUser, currentPage, totalPages, onPageCha
                     <div
                         key={user.id}
                         className="flex items-center gap-4 p-4 hover:bg-gray-50 cursor-pointer border-b last:border-b-0"
-                        onClick={() => onSelectUser(user.login)}
+                        onClick={() => onSelection(user.login)}
                     >
                         <img
                             src={user.avatar_url}
@@ -29,7 +29,7 @@ const SearchResults = ({ users, onSelectUser, currentPage, totalPages, onPageCha
             {totalPages > 1 && (
                 <div className="mt-4 flex justify-center gap-2">
                     <button
-                        onClick={() => onPageChange(currentPage - 1)}
+                        onClick={() => onPagination(currentPage - 1)}
                         disabled={currentPage === 1}
                         className="px-3 py-1 rounded bg-blue-500 text-white disabled:bg-gray-300"
                     >
@@ -39,7 +39,7 @@ const SearchResults = ({ users, onSelectUser, currentPage, totalPages, onPageCha
                         Page {currentPage} of {totalPages}
                     </span>
                     <button
-                        onClick={() => onPageChange(currentPage + 1)}
+                        onClick={() => onPagination(currentPage + 1)}
                         disabled={currentPage === totalPages}
                         className="px-3 py-1 rounded bg-blue-500 text-white disabled:bg-gray-300"
                     >

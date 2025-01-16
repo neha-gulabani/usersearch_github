@@ -7,7 +7,7 @@ import UserProfile from './UserProfile';
 
 function MainPage() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchRes, setSearchRes] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [reposList, setReposList] = useState([]);
     const [error, setError] = useState('');
@@ -26,7 +26,7 @@ function MainPage() {
 
             const response = await fetch(
                 `https://api.github.com/search/users?q=${query}&per_page=10&page=${currentPage}`
-            );
+            ); //page-based info 
 
             if (!response.ok) {
                 throw new Error('Search failed');
@@ -40,10 +40,10 @@ function MainPage() {
 
 
             setTotalPages(Math.ceil(data.total_count / 10));
-            setSearchResults(data.items);
+            setSearchRes(data.items);
         } catch (err) {
             setError(err.message);
-            setSearchResults([]);
+            setSearchRes([]);
         } finally {
             setLoading(false);
         }
@@ -58,7 +58,7 @@ function MainPage() {
             const [userResponse, reposResponse] = await Promise.all([
                 fetch(`https://api.github.com/users/${username}`),
                 fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`)
-            ]);
+            ]); //fetch user info 
 
 
             if (!userResponse.ok) {
@@ -75,7 +75,7 @@ function MainPage() {
 
             setSelectedUser(userData);
             setReposList(reposData);
-            setSearchResults([]);
+            setSearchRes([]);
         } catch (err) {
             setError(err.message);
             setSelectedUser(null);
@@ -85,7 +85,7 @@ function MainPage() {
         }
     };
 
-    const handlePageChange = (newPage) => {
+    const handlePagination = (newPage) => {
         setPage(newPage);
         searchUsers(searchTerm, newPage);
     };
@@ -99,12 +99,12 @@ function MainPage() {
         if (e.target.value === '') setError('')
     };
 
-    const handleUserSelect = (username) => {
+    const handleSelection = (username) => {
         fetchUserDetails(username);
         setSearchTerm('');
     };
 
-    const handleBackToSearch = () => {
+    const handleBackBtn = () => {
         setMode('search');
         setSelectedUser(null);
         setReposList([]);
@@ -121,7 +121,7 @@ function MainPage() {
         } else {
 
             if (searchTerm === '') {
-                setSearchResults([]);
+                setSearchRes([]);
                 setSelectedUser(null);
                 setReposList([]);
             }
@@ -164,7 +164,7 @@ function MainPage() {
 
                     {mode === 'profile' && selectedUser && (
                         <button
-                            onClick={handleBackToSearch}
+                            onClick={handleBackBtn}
                             className="mt-4 text-blue-600 hover:text-blue-800 flex items-center gap-2"
                         >
                             ← Back to search results
@@ -186,11 +186,11 @@ function MainPage() {
 
                     {mode === 'search' && (
                         <SearchResults
-                            users={searchResults}
-                            onSelectUser={handleUserSelect}
+                            users={searchRes}
+                            onSelection={handleSelection}
                             currentPage={page}
                             totalPages={totalPages}
-                            onPageChange={handlePageChange}
+                            onPagination={handlePagination}
                         />
                     )}
                     {selectedUser && <UserCard user={selectedUser} />}
