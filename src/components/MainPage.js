@@ -74,11 +74,13 @@ function MainPage() {
             const reposData = await reposResponse.json();
 
             setSelectedUser(userData);
+            setMode("profile")
             setReposList(reposData);
             setSearchRes([]);
         } catch (err) {
             setError(err.message);
             setSelectedUser(null);
+            setMode("search")
             setReposList([]);
         } finally {
             setLoading(false);
