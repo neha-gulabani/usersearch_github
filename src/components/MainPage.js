@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import useDebounce from '../hooks/useDebounce';
 import UserCard from './UserCard';
 import RepoList from './RepoList';
