@@ -96,23 +96,23 @@ const UserProfile = () => {
 
 
             {!isMobile && <div className="flex flex-wrap gap-8 mt-4 sm:mt-0 sm:flex-row sm:w-2/3 sm:text-left sm:ml-4">
-                <div className="text-center sm:text-left w-full sm:w-auto text-center">
+                <div className="text-center sm:text-center w-full sm:w-auto">
                     <p className="font-semibold">Location</p>
                     <p>{user.location || "Unknown"}</p>
                 </div>
-                <div className="text-center sm:text-left w-full sm:w-auto text-center">
+                <div className="text-center sm:text-center w-full sm:w-auto text-center">
                     <p className="font-semibold">Public Repos</p>
                     <p>{user.public_repos}</p>
                 </div>
-                <div className="text-center sm:text-left w-full sm:w-auto text-center">
+                <div className="text-center sm:text-center w-full sm:w-auto">
                     <p className="font-semibold">Followers</p>
                     <p>{user.followers}</p>
                 </div>
-                <div className="text-center sm:text-left w-full sm:w-auto text-center">
+                <div className="text-center sm:text-center w-full sm:w-auto">
                     <p className="font-semibold">Following</p>
                     <p>{user.following}</p>
                 </div>
-                <div className="text-center sm:text-left w-full sm:w-auto text-center">
+                <div className="text-center sm:text-center w-full sm:w-auto ">
                     <p className="font-semibold">Blog</p>
                     <a
                         href={user.blog}
@@ -123,7 +123,7 @@ const UserProfile = () => {
                         {user.blog || "N/A"}
                     </a>
                 </div>
-                <div className="text-center sm:text-left w-full sm:w-auto text-center">
+                <div className="text-center sm:text-center w-full sm:w-auto">
                     <p className="font-semibold">GitHub Profile</p>
                     <a
                         href={user.html_url}
