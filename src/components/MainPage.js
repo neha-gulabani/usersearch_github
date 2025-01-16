@@ -122,7 +122,7 @@ function MainPage() {
 
             if (searchTerm === '') {
                 setSearchRes([]);
-                setReposList([]);
+
             }
         }
     }, [debouncedRes, searchTerm]);
